@@ -4,37 +4,81 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">login</ion-title>
     </ion-toolbar>
   </ion-header>
 
-<form [formGroup]="usuario">
-    <ion-list>
+  <ion-card>
+    <ion-card-content>
+        <form [formGroup]="usuario">
+          <ion-list>
 
+            <ion-item lines="none">
+              <ion-avatar aria-hidden="true" slot="start">
+                <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              </ion-avatar>
 
-      <ion-item>
-        <ion-input label="Usuario"  labelPlacement="floating" formControlName="user" placeholder="Ingrese Usuario"></ion-input>
-      </ion-item>
+              <ion-input
+              class="centered-input"
+              label="Usuario"
+              color="tertiary"
+              labelPlacement="stacked"
+              fill="outline"
+              formControlName="user"
+              placeholder="Ingrese Usuario"
+              [counter]="true"
+              maxlength="10"
+              ></ion-input>
 
+            </ion-item>
 
-      <ion-item>
-        <ion-input label="Correo"  labelPlacement="floating" formControlName="mail" type="email" placeholder="email@domain.com"></ion-input>
-      </ion-item>
+            <ion-item lines="none">
+              <ion-icon aria-hidden="true" name="mail" slot="start"></ion-icon>
 
+              <ion-input
+              class="centered-input"
+              label="Correo"
+              color="warning"
+              labelPlacement="stacked"
+              fill="outline"
+              formControlName="mail"
+              type="email"
+              placeholder="email@domain.com"
+              [counter]="true"
+              maxlength="30"
+              ></ion-input>
 
-      <ion-item>
-        <ion-input label="Clave"  labelPlacement="floating" formControlName="pass" type="password" value="password" placeholder="Ingrese clave"></ion-input>
-      </ion-item>
+            </ion-item>
 
-      <ion-button (click)="login()" shape="round" color="warning">Login</ion-button>
+            <ion-item lines="none">
+              <ion-icon aria-hidden="true" name="key" slot="start"></ion-icon>
 
-      <ion-button shape="round" color="medium">Registrarse</ion-button>
+              <ion-input
+              class="centered-input"
+              label="Clave"
+              color="dark"
+              labelPlacement="stacked"
+              fill="outline"
+              formControlName="pass"
+              type="password"
+              value="password"
+              placeholder="Ingrese clave"
+              [counter]="true"
+              maxlength="20"
+              ></ion-input>
 
-    </ion-list>
+            </ion-item>
 
-  </form>
+            <ion-button (click)="login()" shape="round" color="warning">Login</ion-button>
 
+            <ion-button shape="round" color="medium">Registrarse</ion-button>
+
+          </ion-list>
+        </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

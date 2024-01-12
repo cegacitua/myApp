@@ -3,6 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
+import { AuthguardGuard } from '../guards/authguard.guard';
+import { AuthalumnoGuard } from '../guards/authalumno.guard';
+
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -18,57 +23,108 @@ export class LoginPage implements OnInit {
     mail: new FormControl('',[Validators.required, Validators.minLength(10), Validators.maxLength(30)]),
   });
 
-  docente = "dcares";
+  d_user = "dcares";
   d_pass= "12345";
   d_mail= "dcares@duocprofesor.cl";
+  nombreDocente = "Diego";
+  apellidoDocente = "Cares";
 
-  alumno = "cgacitua";
+  a_user = "cgacitua";
   a_pass= "54321";
   a_mail= "ce.gacitua@duocuc.cl";
-
+  nombreAlumno = "Cesar";
+  apellidoAlumno = "Gacitua";
 
   valido = false;
 
 
   login(){
-    //crear object navegation extras
-    let nav : NavigationExtras = {
-      state: {
-        user: this.usuario.value.user,
-        pass: this.usuario.value.pass,
-        mail: this.usuario.value.mail,
-      }
-    };
 
     console.log(this.usuario.value.user);
     if (
-      this.usuario.value.user == this.docente &&
+      this.usuario.value.user == this.d_user &&
       this.usuario.value.pass == this.d_pass &&
       this.usuario.value.mail == this.d_mail
       ){
-      this.router.navigate(['/home'], nav);
+      this.authprofesor.setAuth(true);
     }
 
     else if (
-      this.usuario.value.user == this.alumno &&
+      this.usuario.value.user == this.a_user &&
       this.usuario.value.pass == this.a_pass &&
       this.usuario.value.mail == this.a_mail
       ){
-      this.router.navigate(['perfilalumno'], nav);
-
+      this.authalumno.setAuth(true);
     }
 
     else {
       this.presentAlert();
+      return;
       }
+
+
+
+
+    let tipoUsuario;
+    let usuario;
+    let nombre;
+    let apellido;
+    let clave;
+    let correo;
+
+    if (this.usuario.value && this.usuario.value.mail && this.usuario.value.mail.includes('@duocprofesor')) {
+      tipoUsuario = 'profesor';
+    } else {
+      tipoUsuario = 'alumno';
+    }
+
+
+    if (tipoUsuario == 'profesor') {
+        nombre = this.nombreDocente;
+        usuario = this.d_user;
+        apellido = this.apellidoDocente;
+        clave = this.d_pass;
+        correo = this.d_mail;
+    }
+
+    else {
+        nombre = this.nombreAlumno;
+        apellido = this.apellidoAlumno;
+        usuario = this.a_user;
+        clave = this.a_pass;
+        correo = this.a_mail;
+    }
+
+
+    let nav : NavigationExtras = {
+      state: {
+        rol: tipoUsuario,
+        user: usuario,
+        pass: clave,
+        mail: correo,
+        name: nombre,
+        lastname: apellido,
+      }
+    };
+
+    if (
+      tipoUsuario == 'profesor'
+      ){
+      this.router.navigate(['home'], nav);
+    }
+  
+    else {
+      this.router.navigate(['perfilalumno'], nav);
+    }
+
   }
 
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Important message',
-      message: 'This is an alert!',
+      header: 'Credenciales Incorrectas',
+      subHeader: '(Intente nuevamente)',
+      message: 'Asegurese de ingresar correctamente sus datos.',
       buttons: ['OK'],
     });
 
@@ -77,7 +133,7 @@ export class LoginPage implements OnInit {
 
 
 
-  constructor(private router: Router, private alertController: AlertController) { }
+  constructor(private authprofesor: AuthguardGuard, private authalumno: AuthalumnoGuard, private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
   }

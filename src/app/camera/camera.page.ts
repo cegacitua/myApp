@@ -1,15 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
 })
-export class CameraPage implements OnInit {
+export class CameraPage {
 
-  constructor() { }
+  nombre = "";
+  boton = ['Cerrar Sesión'];
 
-  ngOnInit() {
+
+  constructor(private activatedRoute: ActivatedRoute, private router:Router) {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation()?.extras.state){
+        this.nombre = this.router.getCurrentNavigation()?.extras.state?.['name'];
+      }
+    })
   }
+
+
 
 }

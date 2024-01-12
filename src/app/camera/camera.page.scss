@@ -1,0 +1,9 @@
+.image-container {
+    position: relative;
+  }
+  
+  .overlay-button {
+    position: absolute;
+    bottom: 26px; /* Ajusta estos valores para mover el botón */
+    right: 181px;  /* a la posición que desees sobre la imagen */
+  }

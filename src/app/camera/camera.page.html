@@ -11,6 +11,21 @@
     </ion-toolbar>
   </ion-header>
 
-  <img alt="Silhouette of mountains" src="https://static.vecteezy.com/system/resources/previews/004/974/428/original/smartphone-camera-interface-template-mobile-app-interface-black-design-layout-photo-video-recording-screen-flat-ui-for-social-media-selfie-application-phone-display-with-viewfinder-vector.jpg" />
+
+
+  <div class="image-container">
+    <img alt="Camara de Smartphone" src="https://d347bo4ltvvnaz.cloudfront.net/images/preview/Fuse_LifeOnMission_MarketingAssets_Social-Overlay_Transparent_3_preview.jpg" />
+    <ion-button fill="clear" size="large" shape="round" color="light" slot="fixed" class="overlay-button" id="qr-capturado">  </ion-button>
+  </div>
+
+
+  <ion-alert
+  trigger="qr-capturado"
+  header="QR escaneado correctamente"
+  message="Excelente {{nombre}}, has registrado tu asistencia a la clase."
+  [buttons]="boton" [routerLink]="['/login']"
+ ></ion-alert>
 
 </ion-content>
+
+

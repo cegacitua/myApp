@@ -8,20 +8,21 @@ import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 })
 export class PerfilAlumnoPage  {
 
-  usuario = "";
-  boton = ['Cerrar Sesión'];
+  nombre = "";
 
   constructor(private activatedRoute: ActivatedRoute, private router:Router) {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state){
-        this.usuario = this.router.getCurrentNavigation()?.extras.state?.['user'];
+        this.nombre = this.router.getCurrentNavigation()?.extras.state?.['name'];
       }
     })
   }
 
-  // navigate(){
-  //   this.router.navigate(['/camera'])
-  // }
+  navegarACamara() {
+    this.router.navigate(['/camera'], {
+      state: { name: this.nombre }
+    });
+  }
 
 }
 

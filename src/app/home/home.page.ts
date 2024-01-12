@@ -7,12 +7,12 @@ import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  usuario = "";
+  nombre = "";
 
   constructor(private activatedRoute: ActivatedRoute, private router:Router) {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state){
-        this.usuario = this.router.getCurrentNavigation()?.extras.state?.['user'];
+        this.nombre = this.router.getCurrentNavigation()?.extras.state?.['name'];
       }
     })
   }

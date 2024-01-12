@@ -1,0 +1,94 @@
+ion-card {
+    display: grid;
+    // flex-flow: column-reverse;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding: 3px;
+}
+
+
+ion-card-content {
+    display: grid;
+    // flex-flow: column-reverse;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+}
+
+ion-item {
+    display: flex;
+    // flex-flow: column-reverse;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+
+}
+
+ion-input {
+    display: flex;
+    // flex-flow: column-reverse;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    padding: 0px;
+    margin: 4px;
+}
+
+.centered-input {
+    text-align: center;
+    // border: 1px solid #000;
+  }
+
+
+.centered-label {
+text-align: center;
+width: 100%;
+}
+
+
+ion-button {
+    display: grid;
+    // flex-flow: column-reverse;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+}
+
+
+ion-avatar {
+    display: flex;
+    // flex-flow: column-reverse;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 12px;
+}
+
+ion-icon {
+    display: flex;
+    // flex-flow: column-reverse;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 20px;
+}
+
+
+
+.container {
+    display: grid;
+    flex-flow: column-reverse;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding: 3px;
+  }
