@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-perfil-alumno',
+  templateUrl: './perfil-alumno.page.html',
+  styleUrls: ['./perfil-alumno.page.scss'],
 })
-export class HomePage {
+export class PerfilAlumnoPage  {
+
   usuario = "";
+  boton = ['Cerrar Sesión'];
 
   constructor(private activatedRoute: ActivatedRoute, private router:Router) {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -17,10 +19,10 @@ export class HomePage {
     })
   }
 
-  navigate(){
-    this.router.navigate(['/qr'])
-  }
-
-
+  // navigate(){
+  //   this.router.navigate(['/camera'])
+  // }
 
 }
+
+

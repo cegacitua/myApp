@@ -19,9 +19,14 @@ export class LoginPage implements OnInit {
   });
 
   docente = "dcares";
-  // alumno = "";
-  pass= "12345";
-  mail= "dcares@duoc.cl";
+  d_pass= "12345";
+  d_mail= "dcares@duocprofesor.cl";
+
+  alumno = "cgacitua";
+  a_pass= "54321";
+  a_mail= "ce.gacitua@duocuc.cl";
+
+
   valido = false;
 
 
@@ -36,14 +41,23 @@ export class LoginPage implements OnInit {
     };
 
     console.log(this.usuario.value.user);
-    if (this.usuario.value.user == this.docente){
+    if (
+      this.usuario.value.user == this.docente &&
+      this.usuario.value.pass == this.d_pass &&
+      this.usuario.value.mail == this.d_mail
+      ){
       this.router.navigate(['/home'], nav);
     }
 
-    // else if (this.usuario.value.user == this.alumno){
-    //   this.router.navigate(['/qr']);
+    else if (
+      this.usuario.value.user == this.alumno &&
+      this.usuario.value.pass == this.a_pass &&
+      this.usuario.value.mail == this.a_mail
+      ){
+      this.router.navigate(['perfilalumno'], nav);
 
-    // }
+    }
+
     else {
       this.presentAlert();
       }
@@ -64,13 +78,6 @@ export class LoginPage implements OnInit {
 
 
   constructor(private router: Router, private alertController: AlertController) { }
-
-  // navigate(){
-  //   if (localStorage.getItem('token') == null) {
-  //     this.router.navigate(['login']);
-  //   }
-  //   this.router.navigate(['qr']);
-  // }
 
   ngOnInit() {
   }

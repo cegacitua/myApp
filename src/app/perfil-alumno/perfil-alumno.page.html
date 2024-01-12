@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Perfil de alumno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Perfil de alumno</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="ion-padding">Bienvenido a tu perfil, {{usuario}}.</div>
+  <h6 class="ion-padding">Escanea el código QR para registrar tu asistencia</h6>
+
+  <ion-button id="present-alert">Escanear</ion-button>
+  <ion-alert
+   trigger="present-alert"
+   header="Código escaneado correctamente"
+   message="{{usuario}} tu asistencia ha quedado registrada."
+   [buttons]="boton" [routerLink]="['/login']"
+  ></ion-alert>
+
+
+
+</ion-content>
