@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'perfilalumno',
     loadChildren: () => import('./perfil-alumno/perfil-alumno.module').then( m => m.PerfilAlumnoPageModule)
   },
+  {
+    path: 'camera',
+    loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule)
+  },
 ];
 
 @NgModule({
