@@ -6,6 +6,11 @@ import { AlertController } from '@ionic/angular';
 import { AuthguardGuard } from '../guards/authguard.guard';
 import { AuthalumnoGuard } from '../guards/authalumno.guard';
 
+import { usuario } from '../model/usuario';
+import { perfil } from '../model/perfil';
+import { curso } from '../model/curso';
+import { ConsumoapiService } from '../services/consumoapi.service';
+
 
 
 @Component({
@@ -23,101 +28,55 @@ export class LoginPage implements OnInit {
     mail: new FormControl('',[Validators.required, Validators.minLength(10), Validators.maxLength(30)]),
   });
 
-  d_user = "dcares";
-  d_pass= "12345";
-  d_mail= "dcares@duocprofesor.cl";
-  nombreDocente = "Diego";
-  apellidoDocente = "Cares";
-
-  a_user = "cgacitua";
-  a_pass= "54321";
-  a_mail= "ce.gacitua@duocuc.cl";
-  nombreAlumno = "Cesar";
-  apellidoAlumno = "Gacitua";
-
-  valido = false;
-
-
-  login(){
-
-    console.log(this.usuario.value.user);
-    if (
-      this.usuario.value.user == this.d_user &&
-      this.usuario.value.pass == this.d_pass &&
-      this.usuario.value.mail == this.d_mail
-      ){
-      this.authprofesor.setAuth(true);
-    }
-
-    else if (
-      this.usuario.value.user == this.a_user &&
-      this.usuario.value.pass == this.a_pass &&
-      this.usuario.value.mail == this.a_mail
-      ){
-      this.authalumno.setAuth(true);
-    }
-
-    else {
-      this.presentAlert();
-      return;
-      }
-
-
-
-
-    let tipoUsuario;
-    let usuario;
-    let nombre;
-    let apellido;
-    let clave;
-    let correo;
-
-    if (this.usuario.value && this.usuario.value.mail && this.usuario.value.mail.includes('@duocprofesor')) {
-      tipoUsuario = 'profesor';
-    } else {
-      tipoUsuario = 'alumno';
-    }
-
-
-    if (tipoUsuario == 'profesor') {
-        nombre = this.nombreDocente;
-        usuario = this.d_user;
-        apellido = this.apellidoDocente;
-        clave = this.d_pass;
-        correo = this.d_mail;
-    }
-
-    else {
-        nombre = this.nombreAlumno;
-        apellido = this.apellidoAlumno;
-        usuario = this.a_user;
-        clave = this.a_pass;
-        correo = this.a_mail;
-    }
-
-
-    let nav : NavigationExtras = {
-      state: {
-        rol: tipoUsuario,
-        user: usuario,
-        pass: clave,
-        mail: correo,
-        name: nombre,
-        lastname: apellido,
-      }
-    };
-
-    if (
-      tipoUsuario == 'profesor'
-      ){
-      this.router.navigate(['home'], nav);
-    }
   
-    else {
-      this.router.navigate(['perfilalumno'], nav);
-    }
+  private animation!: Animation;
+  private typeuser!: usuario;
+  private typePerfil!: perfil;
+  private curso!:curso;
 
+
+
+  login() {
+    this.consumoapi.login(this.usuario.value.user!, this.usuario.value.pass!).subscribe(
+      (response) => {
+        this.typeuser = response.body as unknown as usuario;
+        console.log("bbb" + response.status);
+        if (response.status == 200) {
+          let setData: NavigationExtras = {
+            state: {
+              id: this.typeuser.id,
+              user: this.typeuser.user,
+              correo: this.typeuser.correo,
+              nombre: this.typeuser.nombre,
+              tipoPerfil: this.typeuser.tipoPerfil
+            }
+          };
+
+          console.log("aaas"+this.typeuser.tipoPerfil);
+
+          if (this.typeuser.tipoPerfil === 1) {
+            this.authprofesor.setAuth(true);
+            this.router.navigate(['/home'], setData);
+          }
+
+          if (this.typeuser.tipoPerfil === 2) {
+            this.authalumno.setAuth(true);
+            this.router.navigate(['/perfilalumno'], setData);
+          }
+        }
+
+        if (response.status === 401) {
+          this.presentAlert();
+
+        }
+      },
+      (error) => {
+        console.error('Error en inicio de sesión:', error);
+      });
   }
+
+
+
 
 
   async presentAlert() {
@@ -133,7 +92,7 @@ export class LoginPage implements OnInit {
 
 
 
-  constructor(private authprofesor: AuthguardGuard, private authalumno: AuthalumnoGuard, private router: Router, private alertController: AlertController) { }
+  constructor(private authprofesor: AuthguardGuard, private authalumno: AuthalumnoGuard, private router: Router, private alertController: AlertController, private consumoapi:ConsumoapiService) { }
 
   ngOnInit() {
   }

@@ -1,9 +1,25 @@
 .image-container {
+  background: url('https://d347bo4ltvvnaz.cloudfront.net/images/preview/Fuse_LifeOnMission_MarketingAssets_Social-Overlay_Transparent_3_preview.jpg') no-repeat center center fixed; 
     position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: contain;
+    background-position: center;
+    height: 100vh;
+    width: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    // margin-bottom: 40%;
+    padding-bottom: 10vh;
   }
   
   .overlay-button {
-    position: absolute;
-    bottom: 26px; /* Ajusta estos valores para mover el botón */
-    right: 181px;  /* a la posición que desees sobre la imagen */
+    position: relative;
+    size: auto;
+    margin: 10 auto;
+    display: flex;
+    // bottom: 26px;
+    // right: 181px;
   }

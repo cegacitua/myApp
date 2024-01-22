@@ -13,14 +13,14 @@ export class PerfilAlumnoPage  {
   constructor(private activatedRoute: ActivatedRoute, private router:Router) {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state){
-        this.nombre = this.router.getCurrentNavigation()?.extras.state?.['name'];
+        this.nombre = this.router.getCurrentNavigation()?.extras.state?.['nombre'];
       }
     })
   }
 
   navegarACamara() {
     this.router.navigate(['/camera'], {
-      state: { name: this.nombre }
+      state: { nombre: this.nombre }
     });
   }
 

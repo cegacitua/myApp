@@ -14,6 +14,7 @@
   </ion-header>
 
 <div><ion-title>Bienvenido {{nombre}}</ion-title></div>
+<div><ion-title>La ID es: {{id}}</ion-title></div>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Registrar Asistencia</ion-card-title>
@@ -21,49 +22,17 @@
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item>
+        <ion-item *ngFor="let curso of cursos">
           <ion-thumbnail slot="start">
             <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
           </ion-thumbnail>
           <div style="flex-grow: 1;">
-            <ion-card-subtitle>Codigo asignatura</ion-card-subtitle>
-            <ion-label>Asignatura 1</ion-label>
+            <ion-card-subtitle>{{ curso.codigo }} / {{ curso.seccion }}</ion-card-subtitle>
+            <ion-label>{{ curso.nombre }}</ion-label>
           </div>
-          <ion-button fill="solid" shape="round" color="secondary" [routerLink]="['/qr']">Generar QR </ion-button>
+
+          <ion-button fill="solid" shape="round" color="secondary" (click)="listadoCurso(curso.id)">Generar QR </ion-button>
         </ion-item>
-  
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-          </ion-thumbnail>
-          <div style="flex-grow: 1;">
-            <ion-card-subtitle>Codigo asignatura</ion-card-subtitle>
-            <ion-label>Asignatura 2</ion-label>
-          </div>
-          <ion-button fill="solid" shape="round" color="secondary" [routerLink]="['/qr']">Generar QR </ion-button>
-        </ion-item>
-  
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-          </ion-thumbnail>
-          <div style="flex-grow: 1;">
-            <ion-card-subtitle>Codigo asignatura</ion-card-subtitle>
-            <ion-label>Asignatura 3</ion-label>
-          </div>
-          <ion-button fill="solid" shape="round" color="secondary" [routerLink]="['/qr']">Generar QR </ion-button>
-        </ion-item>
-  
-        <ion-item lines="none">
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <div style="flex-grow: 1;">
-              <ion-card-subtitle>Codigo asignatura</ion-card-subtitle>
-              <ion-label>Asignatura 4</ion-label>
-            </div>
-            <ion-button fill="solid" shape="round" color="secondary" [routerLink]="['/qr']">Generar QR </ion-button>
-          </ion-item>
 
       </ion-list>
     </ion-card-content>
@@ -72,3 +41,6 @@
   <ion-button expand="block" shape="round" color="medium" [routerLink]="['/login']">Cerrar Sesión</ion-button>
 
 </ion-content>
+
+
+
