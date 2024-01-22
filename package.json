@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ionic build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"
@@ -34,6 +34,7 @@
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
+    "ionic": "^7.6.3",
     "@angular-devkit/build-angular": "^17.0.0",
     "@angular-eslint/builder": "^17.0.0",
     "@angular-eslint/eslint-plugin": "^17.0.0",
