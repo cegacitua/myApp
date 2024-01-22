@@ -17,12 +17,12 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    // canActivate: [AuthguardGuard]
+    canActivate: [AuthguardGuard]
   },
   {
     path: 'qr',
     loadChildren: () => import('./qr/qr.module').then( m => m.QrPageModule),
-    // canActivate: [AuthguardGuard]
+    canActivate: [AuthguardGuard]
   },
   {
     path: 'perfilalumno',
@@ -32,7 +32,7 @@ const routes: Routes = [
   {
     path: 'camera',
     loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule),
-    // canActivate: [AuthalumnoGuard]
+    canActivate: [AuthalumnoGuard]
   },
   {
     path: '**',
