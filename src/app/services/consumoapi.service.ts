@@ -11,7 +11,8 @@ export class ConsumoapiService {
 
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) }
 
-  url: string = 'http://127.0.0.1:5000/';
+  // url: string = 'http://127.0.0.1:5000/';
+  url: string = 'https://api-registrapp-8g1d.onrender.com/';
 
 
 
