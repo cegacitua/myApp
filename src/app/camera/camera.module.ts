@@ -8,6 +8,8 @@ import { CameraPageRoutingModule } from './camera-routing.module';
 
 import { CameraPage } from './camera.page';
 
+import { QRScanner } from '@ionic-native/qr-scanner/ngx';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,7 @@ import { CameraPage } from './camera.page';
     IonicModule,
     CameraPageRoutingModule
   ],
-  declarations: [CameraPage]
+  declarations: [CameraPage],
+  providers: [QRScanner]
 })
 export class CameraPageModule {}

@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/comm
 import { Observable } from 'rxjs';
 import { usuario } from '../model/usuario';
 import { alumnos } from '../model/alumno';
-// import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,11 @@ export class ConsumoapiService {
   httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) }
 
 
-  // url: string = environment.apiUrl;
-  
-  url: string = 'https://api-registrapp-8g1d.onrender.com/';
+  url: string = environment.apiUrl;
 
-  // url: string = 'http://127.0.0.1:5000';
+  // url: string = 'https://api-registrapp-8g1d.onrender.com/';
+
+  // url: string = 'http://127.0.0.1:5000/';
 
   public login(usuario: string, pass: string): Observable<HttpResponse<usuario>> {
     const body = {
@@ -39,9 +39,9 @@ export class ConsumoapiService {
     return this.http.get<alumnos[]>(this.url + 'profesores/' + profesorId + '/cursos/' + cursoId + '/alumnos', this.httpOptions);
   }
 
-  // public registrarAsistencia(body: any): Observable<any> {
-  //   return this.http.post<any>(this.url + 'registrar_asistencia', body, this.httpOptions);
-  // }
+  public registrarAsistencia(body: any): Observable<any> {
+    return this.http.post<any>(this.url + 'registrar_asistencia', body, this.httpOptions);
+  }
 
 
 
