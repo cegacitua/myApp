@@ -34,8 +34,9 @@ export class QrPage implements OnInit {
 
   generateQRCode() {
     if (this.cursol) {
-        const fechaActual = new Date().toISOString().split('T')[0];  // Fecha en formato YYYY-MM-DD
-        const data = `${this.cursol.codigo}-${this.cursol.seccion}-${fechaActual}`;
+        const fechaActual = new Date().toISOString().split('T')[0];
+        // const data = `${this.cursol.codigo}-${this.cursol.seccion}-${fechaActual}`;
+        const data = "hola mundo"
 
         let qr = qrcode(4, 'L');
         qr.addData(data);
