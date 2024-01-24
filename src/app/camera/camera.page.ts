@@ -4,8 +4,8 @@ import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../services/consumoapi.service';
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-// import { Camera, ImageOptions } from '@capacitor/camera';
+// import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera, ImageOptions } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 
 
@@ -25,7 +25,7 @@ export class CameraPage {
   idAlumno: any;
 
   constructor(
-    private camera: Camera,
+    // private camera: Camera,
     private qrScanner: QRScanner,
     private activeroute: ActivatedRoute,
     private router: Router,
