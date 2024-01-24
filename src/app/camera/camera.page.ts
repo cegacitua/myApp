@@ -4,7 +4,8 @@ import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../services/consumoapi.service';
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
-import { Camera } from '@capacitor/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+// import { Camera, ImageOptions } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 
 
@@ -24,6 +25,7 @@ export class CameraPage {
   idAlumno: any;
 
   constructor(
+    private camera: Camera,
     private qrScanner: QRScanner,
     private activeroute: ActivatedRoute,
     private router: Router,
@@ -39,11 +41,14 @@ export class CameraPage {
   }
 
   ngOnInit() {
+    
     this.requestCameraPermission();
   }
 
   async requestCameraPermission() {
-    if (Capacitor.getPlatform() !== 'web') {
+    console.log('requestCameraPermission was called');
+   
+      
       const cameraStatus = await Camera.checkPermissions();
 
       if (cameraStatus.camera !== 'granted') {
@@ -52,7 +57,7 @@ export class CameraPage {
       } else {
         this.startScanner();
       }
-    }
+    
   }
 
   async startScanner() {
@@ -84,6 +89,23 @@ export class CameraPage {
       .catch((e: any) => console.log('Error:', e));
   }
 
+
+  // camara() {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     destinationType: this.camera.DestinationType.FILE_URI,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE
+  //   };
+
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     let base64Image = 'data:image/jpeg;base64,' + imageData;
+  //     console.log(base64Image);
+  //   }).catch((err) => {
+  //     console.error(err);
+  //   });
+  // }
+
   async showSettingsAlert() {
     const alert = await this.alertController.create({
       header: 'Permiso de Cámara',
@@ -107,6 +129,9 @@ export class CameraPage {
     });
   }
 }
+
+
+
 
 
 
