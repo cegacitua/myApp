@@ -1,1 +1,10 @@
-{}
+{
+    "android": {
+      "permissions": ["CAMERA", "FLASHLIGHT"],
+      "metadata": {
+        "com.google.mlkit.vision.DEPENDENCIES": "barcode_ui"
+      }
+    }
+}
+
+
