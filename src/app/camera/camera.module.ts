@@ -8,7 +8,10 @@ import { CameraPageRoutingModule } from './camera-routing.module';
 
 import { CameraPage } from './camera.page';
 
-import { QRScanner } from '@ionic-native/qr-scanner/ngx';
+// import { QRScanner } from '@ionic-native/qr-scanner/ngx';
+import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
+
+
 
 @NgModule({
   imports: [
@@ -18,6 +21,6 @@ import { QRScanner } from '@ionic-native/qr-scanner/ngx';
     CameraPageRoutingModule
   ],
   declarations: [CameraPage],
-  providers: [QRScanner]
+  providers: [BarcodeScanner]
 })
 export class CameraPageModule {}

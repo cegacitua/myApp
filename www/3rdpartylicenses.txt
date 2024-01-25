@@ -13,6 +13,12 @@ MIT
 @angular/router
 MIT
 
+@awesome-cordova-plugins/barcode-scanner
+MIT
+
+@awesome-cordova-plugins/core
+MIT
+
 @babel/runtime
 MIT
 MIT License
@@ -89,12 +95,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
-@ionic-native/core
-MIT
-
-@ionic-native/qr-scanner
-MIT
 
 @ionic/angular
 MIT
