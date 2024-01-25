@@ -4,15 +4,24 @@ import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../services/consumoapi.service';
 import { Capacitor } from '@capacitor/core';
 
-import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
-import { Camera, ImageOptions } from '@capacitor/camera';
+import { isPlatform} from '@ionic/angular';
+
+import { Camera, ImageOptions, CameraResultType, CameraSource } from '@capacitor/camera';
+
+import {
+  Barcode,
+  BarcodeScanner,
+  BarcodeFormat,
+  LensFacing
+} from '@capacitor-mlkit/barcode-scanning';
+
 
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
 })
-export class CameraPage {
+export class CameraPage implements OnInit {
 
   nombre = "";
   boton = ['Cerrar Sesión'];
@@ -20,12 +29,14 @@ export class CameraPage {
   userHome: any;
   idAlumno: any;
 
+  isSupported = false;
+  barcodes: Barcode[] = [];
+
   constructor(
-    private barcodeScanner: BarcodeScanner,
+    private alertController: AlertController,
     private activeroute: ActivatedRoute,
     private router: Router,
     private apiService: ConsumoapiService,
-    private alertController: AlertController
   ) {
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state) {
@@ -35,42 +46,37 @@ export class CameraPage {
     });
   }
 
+
   ngOnInit() {
-    this.requestCameraPermission();
-  }
-
-  async requestCameraPermission() {
-    console.log('requestCameraPermission was called');
-   
-    const cameraStatus = await Camera.checkPermissions();
-
-    if (cameraStatus.camera !== 'granted') {
-      await Camera.requestPermissions();
-      this.startScanner();
-    } else {
-      this.startScanner();
-    }
-  }
-
-  async startScanner() {
-    console.log('startScanner was called');
-
-    this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Scanned something', barcodeData.text);
-      const [codigo, seccion, fecha] = barcodeData.text.split('-');
-      this.registrarAsistencia(codigo, seccion, fecha);
-    }).catch(err => {
-      console.log('Error:', err);
+    BarcodeScanner.isSupported().then((result) => {
+      this.isSupported = result.supported;
     });
   }
 
-  async showSettingsAlert() {
+  async scan(): Promise<void> {
+    const granted = await this.requestPermissions();
+    if (!granted) {
+      this.presentAlert();
+      return;
+    }
+    const { barcodes } = await BarcodeScanner.scan({
+      formats: [BarcodeFormat.QrCode],
+    });
+    this.barcodes.push(...barcodes);
+  }
+
+  async requestPermissions(): Promise<boolean> {
+    const { camera } = await BarcodeScanner.requestPermissions();
+    return camera === 'granted' || camera === 'limited';
+  }
+
+
+  async presentAlert(): Promise<void> {
     const alert = await this.alertController.create({
       header: 'Permiso de Cámara',
       message: 'Se necesita acceso a la cámara para escanear códigos QR. Por favor, habilite el acceso a la cámara en la configuración de su dispositivo.',
       buttons: ['OK']
     });
-
     await alert.present();
   }
 

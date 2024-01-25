@@ -9,11 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { ConsumoapiService } from './services/consumoapi.service';
 import { Camera } from '@capacitor/camera';
 
-import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
-
 import { HttpClientModule } from '@angular/common/http';
 
-
+import {
+  Barcode,
+  BarcodeScanner,
+  BarcodeFormat,
+  LensFacing
+} from '@capacitor-mlkit/barcode-scanning';
 
 
 @NgModule({
