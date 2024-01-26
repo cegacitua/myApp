@@ -2,7 +2,8 @@
   "name": "myApp",
   "integrations": {
     "capacitor": {},
-    "cordova": {}
+    "cordova": {},
+    "capacitor-mlkit": {}
   },
   "type": "angular"
 }

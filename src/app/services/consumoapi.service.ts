@@ -28,7 +28,17 @@ export class ConsumoapiService {
     return this.http.post<usuario>(this.url + "login", body, { ...this.httpOptions, observe: 'response' });
   }
 
-
+  public registrarUsuario(usuario: string, pass: string, nombre: string, perfil: number, correo: string): Observable<HttpResponse<any>> {
+    const body = {
+      user: usuario,
+      password: pass,
+      nombre: nombre,
+      perfil: perfil,
+      correo: correo
+    };
+  
+    return this.http.post<any>(this.url + "registrar", body, { ...this.httpOptions, observe: 'response' });
+  }
 
 
   public obtenerCursosPorProfesor(profesorId: number): Observable<any> {

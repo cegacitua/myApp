@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 import { AuthguardGuard } from '../guards/authguard.guard';
 import { AuthalumnoGuard } from '../guards/authalumno.guard';
@@ -10,6 +10,8 @@ import { usuario } from '../model/usuario';
 import { perfil } from '../model/perfil';
 import { curso } from '../model/curso';
 import { ConsumoapiService } from '../services/consumoapi.service';
+
+import { RegistroComponent } from '../registro/registro.component';
 
 
 
@@ -78,6 +80,20 @@ export class LoginPage implements OnInit {
 
 
 
+  async abrirModalRegistro() {
+    const modal = await this.modalController.create({
+      component: RegistroComponent,
+    });
+  
+    await modal.present();
+  
+    const { data } = await modal.onWillDismiss();
+    if (data && data.registrado) {
+      // El usuario se registró con éxito en el modal
+      // Aquí puedes realizar alguna acción, como redirigir al usuario a otra página
+      this.router.navigate(['/login']);
+    }
+  }
 
   async presentAlert() {
     const alert = await this.alertController.create({
@@ -92,7 +108,14 @@ export class LoginPage implements OnInit {
 
 
 
-  constructor(private authprofesor: AuthguardGuard, private authalumno: AuthalumnoGuard, private router: Router, private alertController: AlertController, private consumoapi:ConsumoapiService) { }
+  constructor(
+    private authprofesor: AuthguardGuard,
+    private authalumno: AuthalumnoGuard,
+    private router: Router,
+    private alertController: AlertController,
+    private consumoapi:ConsumoapiService,
+    private modalController: ModalController
+    ) { }
 
   ngOnInit() {
   }

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../services/consumoapi.service';
-import { Capacitor } from '@capacitor/core';
+
+
 
 import { isPlatform} from '@ionic/angular';
+import { Capacitor, PermissionState } from '@capacitor/core';
 
 import { Camera, ImageOptions, CameraResultType, CameraSource } from '@capacitor/camera';
 
@@ -53,6 +55,16 @@ export class CameraPage implements OnInit {
     });
   }
 
+
+
+
+
+
+  async requestPermissions(): Promise<boolean> {
+    const { camera } = await BarcodeScanner.requestPermissions();
+    return camera === 'granted' || camera === 'limited';
+  }
+
   async scan(): Promise<void> {
     const granted = await this.requestPermissions();
     if (!granted) {
@@ -65,10 +77,7 @@ export class CameraPage implements OnInit {
     this.barcodes.push(...barcodes);
   }
 
-  async requestPermissions(): Promise<boolean> {
-    const { camera } = await BarcodeScanner.requestPermissions();
-    return camera === 'granted' || camera === 'limited';
-  }
+
 
 
   async presentAlert(): Promise<void> {

@@ -1,0 +1,23 @@
+<form [formGroup]="usuario" (ngSubmit)="registrar()">
+  <ion-item>
+    <ion-input label="Usuario" type="text" formControlName="user"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input label="Contraseña" type="password" formControlName="pass"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input label="Nombre" type="text" formControlName="nombre"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input label="Perfil" type="number" formControlName="perfil"></ion-input>
+  </ion-item>
+  <div *ngIf="usuario.get('perfil')?.errors">
+    <p *ngIf="usuario.get('perfil')?.errors?.['required']">Perfil es requerido.</p>
+    <p *ngIf="usuario.get('perfil')?.errors?.['min'] || usuario.get('perfil')?.errors?.['max']">Perfil debe ser 1 (docente) o 2 (alumno).</p>
+  </div>
+  <ion-item>
+    <ion-input label="Email" type="email" formControlName="correo"></ion-input>
+  </ion-item>
+  <ion-button type="submit" expand="full" [disabled]="!usuario.valid">Registrar</ion-button>
+  <p>{{ mensaje }}</p>
+</form>

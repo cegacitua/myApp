@@ -10,6 +10,8 @@ import { ConsumoapiService } from './services/consumoapi.service';
 import { Camera } from '@capacitor/camera';
 
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegistroComponent } from './registro/registro.component';
 
 import {
   Barcode,
@@ -19,9 +21,10 @@ import {
 } from '@capacitor-mlkit/barcode-scanning';
 
 
+
 @NgModule({
-  declarations: [AppComponent],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  declarations: [AppComponent, RegistroComponent],
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // { provide: BarcodeScanner, useClass: BarcodeScanner }

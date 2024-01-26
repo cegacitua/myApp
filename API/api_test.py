@@ -64,6 +64,11 @@ usuarios = [
 ]
 
 
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({"message": "Bienvenido a la API"}), 200
+
+
 @app.route('/login', methods=['POST'])
 def login():
     username = request.json.get('user')
@@ -83,7 +88,35 @@ def login():
         return jsonify({"message": "Credenciales incorrectas"}), 401
 
 
-@app.route('/profesores', methods=['GET'])
+@app.route('/registrar', methods=['POST'])
+def registrar():
+    user = request.json.get('user')
+    password = request.json.get('password')
+    nombre = request.json.get('nombre')
+    perfil = request.json.get('perfil')
+    correo = request.json.get('correo')
+
+    # Verificar si el usuario ya existe
+    usuario_existente = next((u for u in usuarios if u["user"] == user), None)
+    if usuario_existente:
+        return jsonify({"message": "El nombre de usuario ya está en uso"}), 400
+
+    # Crear el nuevo usuario
+    nuevo_usuario = {
+        "id": len(usuarios) + 1,  # Asignar un nuevo ID al usuario
+        "user": user,
+        "password": password,
+        "nombre": nombre,
+        "perfil": perfil,
+        "correo": correo
+    }
+
+    # Agregar el nuevo usuario a la lista de usuarios
+    usuarios.append(nuevo_usuario)
+
+    return jsonify(nuevo_usuario), 201
+
+@app.route('/profesores' and '/profesores/', methods=['GET'])
 def obtener_profesores():
     return jsonify(profesores), 200
 
@@ -104,6 +137,10 @@ def obtener_alumnos_curso(profesor_id, curso_id):
         return jsonify({"message": "Curso no encontrado"}), 404
     return jsonify(curso["alumnos"]), 200
 
+
+@app.route('/usuarios' and '/usuarios/', methods=['GET'])
+def obtener_usuarios():
+    return jsonify(usuarios), 200
 
 
 @app.route('/registrar_asistencia', methods=['POST'])
