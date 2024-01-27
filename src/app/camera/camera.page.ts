@@ -58,13 +58,6 @@ export class CameraPage implements OnInit {
 
 
 
-
-
-  async requestPermissions(): Promise<boolean> {
-    const { camera } = await BarcodeScanner.requestPermissions();
-    return camera === 'granted' || camera === 'limited';
-  }
-
   async scan(): Promise<void> {
     const granted = await this.requestPermissions();
     if (!granted) {
@@ -74,11 +67,41 @@ export class CameraPage implements OnInit {
     const { barcodes } = await BarcodeScanner.scan({
       formats: [BarcodeFormat.QrCode],
     });
-    this.barcodes.push(...barcodes);
+    this.aperturaAlert();
+    if (barcodes.length > 0) {
+      this.capturaAlert();
+      this.barcodes.push(...barcodes);
+      // this.registrarAsistencia(barcodes[0].rawValue, barcodes[0].format, barcodes[0].format);
+    } else {
+      this.errorAlert();
+    }
   }
 
 
 
+
+  // async scanBarcode(): Promise<void> {
+  //   const granted = await this.requestPermissions();
+  //   if (!granted) {
+  //     this.presentAlert();
+  //     return;
+  //   }
+  //   const result = await BarcodeScanner.scan();
+  //   if (result.hasContent) {
+  //     this.registrarAsistencia(result.content, result.format, result.format);
+  //     this.aperturaAlert();
+  //   } else {
+  //     this.errorAlert();
+  //   }
+  // }
+
+
+
+
+  async requestPermissions(): Promise<boolean> {
+    const { camera } = await BarcodeScanner.requestPermissions();
+    return camera === 'granted' || camera === 'limited';
+  }
 
   async presentAlert(): Promise<void> {
     const alert = await this.alertController.create({
@@ -88,6 +111,39 @@ export class CameraPage implements OnInit {
     });
     await alert.present();
   }
+
+
+
+  async aperturaAlert(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Apertura de escaner exitosa',
+      message: 'Se abrió el escaner .',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+
+  async capturaAlert(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Escaneo exitoso',
+      message: 'Se almacenó exitosamente el QR en el array.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async errorAlert(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Escaneo Fallido',
+      message: 'El escaneo no se pudo realizar.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+
+
 
   registrarAsistencia(codigo: string, seccion: string, fecha: string) {
     const body = {
