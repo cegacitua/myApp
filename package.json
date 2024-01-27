@@ -12,8 +12,12 @@
   "bugs": {
     "url": "https://github.com/cegacitua/myApp/issues"
   },
-  "keywords": ["ionic", "angular", "mobile", "app"],
-
+  "keywords": [
+    "ionic",
+    "angular",
+    "mobile",
+    "app"
+  ],
   "scripts": {
     "ng": "ng",
     "ci": "npm ci && npm run build",
@@ -42,8 +46,8 @@
     "@capacitor/android": "latest",
     "@capacitor/app": "latest",
     "@capacitor/camera": "latest",
-    "@capacitor/core": "latest",
     "@capacitor/cli": "latest",
+    "@capacitor/core": "latest",
     "@capacitor/device": "latest",
     "@capacitor/haptics": "latest",
     "@capacitor/keyboard": "latest",
@@ -67,8 +71,8 @@
     "@capacitor/android": "latest",
     "@capacitor/app": "latest",
     "@capacitor/camera": "latest",
-    "@capacitor/core": "latest",
     "@capacitor/cli": "latest",
+    "@capacitor/core": "latest",
     "@capacitor/device": "latest",
     "@capacitor/haptics": "latest",
     "@capacitor/keyboard": "latest",
