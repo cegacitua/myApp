@@ -59,19 +59,20 @@ export class CameraPage implements OnInit {
 
 
   async scan(): Promise<void> {
-    const granted = await this.requestPermissions();
-    if (!granted) {
-      this.presentAlert();
-      return;
-    }
+    // const granted = await this.requestPermissions();
+    // if (!granted) {
+    //   this.presentAlert();
+    //   return;
+    // }
     const checkModule = await this.CheckGoogleBSModuleAvailable();
     const { barcodes } = await BarcodeScanner.scan({
       formats: [BarcodeFormat.QrCode],
     });
-    this.aperturaAlert();
+    await this.showAlert(JSON.stringify(barcodes));
     if (barcodes.length > 0) {
-      this.capturaAlert();
+      this.aperturaAlert();
       this.barcodes.push(...barcodes);
+      this.capturaAlert();
       // this.registrarAsistencia(barcodes[0].displayValue);
     } else {
       this.errorAlert();
@@ -164,7 +165,14 @@ export class CameraPage implements OnInit {
     await alert.present();
   }
 
-
+  async showAlert(message: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Debug',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
 
 
   registrarAsistencia(codigo: string, seccion: string, fecha: string) {
