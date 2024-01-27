@@ -3,15 +3,13 @@ import { curso } from '../model/curso';
 import { alumnos } from '../model/alumno';
 import { ConsumoapiService } from '../services/consumoapi.service'; 
 import { ActivatedRoute, Router, Route } from '@angular/router';
-import * as qrcode from 'qrcode-generator';
+import QRCode from 'qrcode';
 
 @Component({
   selector: 'app-qr',
   templateUrl: './qr.page.html',
   styleUrls: ['./qr.page.scss'],
 })
-
-
 export class QrPage implements OnInit {
 
   cursol: curso | undefined;
@@ -32,19 +30,21 @@ export class QrPage implements OnInit {
 
   }
 
-  generateQRCode() {
+  async generateQRCode() {
     if (this.cursol) {
         const fechaActual = new Date().toISOString().split('T')[0];
-        // const data = `${this.cursol.codigo}-${this.cursol.seccion}-${fechaActual}`;
-        const data = "hola mundo"
+        // const data = "hola mundo";
+        const data = `${this.cursol.codigo}-${this.cursol.seccion}-${fechaActual}`;
+        
 
-        let qr = qrcode(4, 'L');
-        qr.addData(data);
-        qr.make();
-        this.qrDataURL = qr.createDataURL(4);
+        try {
+            // this.qrDataURL = await QRCode.toDataURL(data);
+            this.qrDataURL = await QRCode.toString(data, { type: 'svg' });
+        } catch (err) {
+            console.error(err);
+        }
     }
   }
-
 
   ngOnInit() {
     this.apiService.obtenerCursosPorProfesor(this.profesorId).subscribe(
@@ -57,8 +57,5 @@ export class QrPage implements OnInit {
             console.error("Error obteniendo cursos:", error);
         }
     );
+  }
 }
-
-}
-
-
