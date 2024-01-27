@@ -64,6 +64,7 @@ export class CameraPage implements OnInit {
       this.presentAlert();
       return;
     }
+    const checkModule = await this.CheckGoogleBSModuleAvailable();
     const { barcodes } = await BarcodeScanner.scan({
       formats: [BarcodeFormat.QrCode],
     });
@@ -71,7 +72,7 @@ export class CameraPage implements OnInit {
     if (barcodes.length > 0) {
       this.capturaAlert();
       this.barcodes.push(...barcodes);
-      // this.registrarAsistencia(barcodes[0].rawValue, barcodes[0].format, barcodes[0].format);
+      // this.registrarAsistencia(barcodes[0].displayValue);
     } else {
       this.errorAlert();
     }
@@ -102,6 +103,27 @@ export class CameraPage implements OnInit {
     const { camera } = await BarcodeScanner.requestPermissions();
     return camera === 'granted' || camera === 'limited';
   }
+
+
+
+  async CheckGoogleBSModuleAvailable(): Promise<void> {
+    const result = await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
+    if (result.available) {
+      this.availableAlert();
+    }
+    else {
+      this.noAvailableAlert();
+    }
+  }
+  noAvailableAlert() {
+    throw new Error('Method not implemented.');
+  }
+  availableAlert() {
+    throw new MessageEvent('Method implemented.');
+  }
+
+
+
 
   async presentAlert(): Promise<void> {
     const alert = await this.alertController.create({
