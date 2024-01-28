@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -6,12 +6,12 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ConsumoapiService } from './services/consumoapi.service';
+import { ConsumoapiService } from './core/services/consumoapi/consumoapi.service';
 import { Camera } from '@capacitor/camera';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RegistroComponent } from './registro/registro.component';
+import { RegistroComponent } from './modules/registro/registro.component';
 
 import {
   Barcode,
@@ -30,5 +30,8 @@ import {
     // { provide: BarcodeScanner, useClass: BarcodeScanner }
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
+
+

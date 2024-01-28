@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthguardGuard } from './guards/authguard.guard';
-import { AuthalumnoGuard } from './guards/authalumno.guard';
+import { AuthguardGuard } from './core/guards/authguard.guard';
+import { AuthalumnoGuard } from './core/guards/authalumno.guard';
 
 const routes: Routes = [
 
@@ -12,31 +12,31 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./modules/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./modules/home/home.module').then( m => m.HomePageModule),
     // canActivate: [AuthguardGuard]
   },
   {
     path: 'qr',
-    loadChildren: () => import('./qr/qr.module').then( m => m.QrPageModule),
+    loadChildren: () => import('./modules/qr/qr.module').then( m => m.QrPageModule),
     // canActivate: [AuthguardGuard]
   },
   {
     path: 'perfilalumno',
-    loadChildren: () => import('./perfil-alumno/perfil-alumno.module').then( m => m.PerfilAlumnoPageModule),
+    loadChildren: () => import('./modules/perfil-alumno/perfil-alumno.module').then( m => m.PerfilAlumnoPageModule),
     // canActivate: [AuthalumnoGuard]
   },
   {
-    path: 'camera',
-    loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule),
+    path: 'barcode-scanning',
+    loadChildren: () => import('./modules/barcode-scanning/barcode-scanning.module').then( m => m.BarcodeScanningModule),
     // canActivate: [AuthalumnoGuard]
   },
   {
     path: '**',
-    loadChildren: () => import('./page404/page404.module').then( m => m.Page404PageModule)
+    loadChildren: () => import('./modules/page404/page404.module').then( m => m.Page404PageModule)
   },
 ];
 
