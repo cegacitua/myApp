@@ -24,8 +24,8 @@ ext {
     mlkitTextRecognitionVersion = 'latest.release'
     playServicesCodeScannerVersion = 'latest.release'
     playServicesVisionVersion = 'latest.release'
-    androidxCameraExtensionsVersion = 'latest.release'
-    androidxCameraVersion = 'latest.release'
-    androidxCameraLifecycleExtensionsVersion = 'latest.release'
+    // androidxCameraExtensionsVersion = 'latest.release'
+    // androidxCameraVersion = 'latest.release'
+    // androidxCameraLifecycleExtensionsVersion = 'latest.release'
     
 }
