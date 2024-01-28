@@ -82,22 +82,6 @@ export class CameraPage implements OnInit {
 
 
 
-  // async scanBarcode(): Promise<void> {
-  //   const granted = await this.requestPermissions();
-  //   if (!granted) {
-  //     this.presentAlert();
-  //     return;
-  //   }
-  //   const result = await BarcodeScanner.scan();
-  //   if (result.hasContent) {
-  //     this.registrarAsistencia(result.content, result.format, result.format);
-  //     this.aperturaAlert();
-  //   } else {
-  //     this.errorAlert();
-  //   }
-  // }
-
-
 
 
   async requestPermissions(): Promise<boolean> {

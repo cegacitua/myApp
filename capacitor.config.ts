@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'RegistrAPP',
   webDir: 'www/browser',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'http'
   }
 };
 
