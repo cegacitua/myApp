@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { curso } from '../model/curso';
 import { alumnos } from '../model/alumno';
-import { ConsumoapiService } from '../services/consumoapi.service'; 
+import { ConsumoapiService } from '../services/consumoapi.service';
 import { ActivatedRoute, Router, Route } from '@angular/router';
 import QRCode from 'qrcode';
 
@@ -35,7 +35,7 @@ export class QrPage implements OnInit {
         const fechaActual = new Date().toISOString().split('T')[0];
         // const data = "hola mundo";
         const data = `${this.cursol.codigo}_${this.cursol.seccion}_${fechaActual}`;
-        
+
 
         try {
             // this.qrDataURL = await QRCode.toDataURL(data);

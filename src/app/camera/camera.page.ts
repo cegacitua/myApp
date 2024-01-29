@@ -76,10 +76,10 @@ export class CameraPage implements OnInit, AfterViewInit {
     };
 
     this.apiService.registrarAsistencia(body).subscribe(response => {
-      console.log(response);
+      this.capturaAlert(response)
       this.stopScan();
     });
-    this.capturaAlert()
+    
   }
 
 
@@ -91,10 +91,9 @@ export class CameraPage implements OnInit, AfterViewInit {
 
 
 
-  userHome: any;
+  nombre: any;
   idAlumno: any;
 
-  nombre = "";
   boton = ['Cerrar Sesión'];
 
   constructor(
@@ -105,7 +104,7 @@ export class CameraPage implements OnInit, AfterViewInit {
   ) {
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state) {
-        this.userHome = this.router.getCurrentNavigation()?.extras.state?.['user'];
+        this.nombre = this.router.getCurrentNavigation()?.extras.state?.['user'];
         this.idAlumno = this.router.getCurrentNavigation()?.extras.state?.['id'];
       }
     });
@@ -123,10 +122,10 @@ export class CameraPage implements OnInit, AfterViewInit {
   }
 
 
-  async capturaAlert(): Promise<void> {
+  async capturaAlert(mensaje:any): Promise<void> {
     const alert = await this.alertController.create({
       header: 'QR escaneado correctamente',
-      message: `Excelente ${this.nombre}, has registrado tu asistencia a la clase.`,
+      message: `Excelente ${this.nombre}, has registrado tu asistencia a la clase. ${mensaje}`,
       buttons: [{
         text: 'Cerrar Sesión',
         handler: () => {
