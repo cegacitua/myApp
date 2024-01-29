@@ -3,20 +3,11 @@ import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../services/consumoapi.service';
 
+import { ViewChild, ElementRef } from '@angular/core';
 
+import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 
-import { isPlatform} from '@ionic/angular';
-import { Capacitor, PermissionState } from '@capacitor/core';
-
-import { Camera, ImageOptions, CameraResultType, CameraSource } from '@capacitor/camera';
-
-import {
-  Barcode,
-  BarcodeScanner,
-  BarcodeFormat,
-  LensFacing
-} from '@capacitor-mlkit/barcode-scanning';
-
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-camera',
@@ -24,15 +15,76 @@ import {
   styleUrls: ['./camera.page.scss'],
 })
 export class CameraPage implements OnInit {
+  @ViewChild(NgxScannerQrcodeComponent, { static: false })
+  scanner!: NgxScannerQrcodeComponent;
+  qrScanned = false;
 
-  nombre = "";
-  boton = ['Cerrar Sesión'];
+  // @ViewChild(NgxScannerQrcodeModule, { static: false })
+  // qr!: NgxScannerQrcodeModule;
+
+
+  ngOnInit() {
+    this.startScan();
+  }
+
+  startScan() {
+    if (this.scanner) {
+      this.scanner.start();
+    }
+  }
+
+
+  async handleQrScan(data: any) {
+    this.qrScanned = true;
+
+  }
+
+
+  async procesarQR() {
+    let qr = this.scanner.data.value[0].value;
+    let partes = qr.split('-');
+
+    if (partes.length !== 3 || qr.length > 20){
+      console.error('El código QR no tiene el formato correcto.');
+    }
+    else{
+    let [codigo, seccion, fecha] = partes;
+    this.registrarAsistencia(codigo, seccion, fecha);
+    }
+  }
+
+
+
+  registrarAsistencia(codigo: string, seccion: string, fecha: string) {
+    const body = {
+      alumno_id: this.idAlumno,
+      codigo: codigo,
+      seccion: seccion,
+      fecha: fecha
+    };
+
+    this.apiService.registrarAsistencia(body).subscribe(response => {
+      console.log(response);
+      this.stopScan();
+    });
+    this.capturaAlert()
+  }
+
+
+  stopScan() {
+    if (this.scanner) {
+      this.scanner.stop();
+    }
+  }
+
+
+
 
   userHome: any;
   idAlumno: any;
 
-  isSupported = false;
-  barcodes: Barcode[] = [];
+  nombre = "";
+  boton = ['Cerrar Sesión'];
 
   constructor(
     private alertController: AlertController,
@@ -49,64 +101,6 @@ export class CameraPage implements OnInit {
   }
 
 
-  ngOnInit() {
-    BarcodeScanner.isSupported().then((result) => {
-      this.isSupported = result.supported;
-    });
-  }
-
-
-
-
-  async scan(): Promise<void> {
-    // const granted = await this.requestPermissions();
-    // if (!granted) {
-    //   this.presentAlert();
-    //   return;
-    // }
-    const checkModule = await this.CheckGoogleBSModuleAvailable();
-    const { barcodes } = await BarcodeScanner.scan({
-      formats: [BarcodeFormat.QrCode],
-    });
-    await this.showAlert(JSON.stringify(barcodes));
-    if (barcodes.length > 0) {
-      this.aperturaAlert();
-      this.barcodes.push(...barcodes);
-      this.capturaAlert();
-      // this.registrarAsistencia(barcodes[0].displayValue);
-    } else {
-      this.errorAlert();
-    }
-  }
-
-
-
-
-
-
-  async requestPermissions(): Promise<boolean> {
-    const { camera } = await BarcodeScanner.requestPermissions();
-    return camera === 'granted' || camera === 'limited';
-  }
-
-
-
-  async CheckGoogleBSModuleAvailable(): Promise<void> {
-    const result = await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
-    if (result.available) {
-      this.availableAlert();
-    }
-    else {
-      this.noAvailableAlert();
-    }
-  }
-  noAvailableAlert() {
-    throw new Error('Method not implemented.');
-  }
-  availableAlert() {
-    throw new MessageEvent('Method implemented.');
-  }
-
 
 
 
@@ -120,55 +114,19 @@ export class CameraPage implements OnInit {
   }
 
 
-
-  async aperturaAlert(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: 'Apertura de escaner exitosa',
-      message: 'Se abrió el escaner .',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-
   async capturaAlert(): Promise<void> {
     const alert = await this.alertController.create({
-      header: 'Escaneo exitoso',
-      message: 'Se almacenó exitosamente el QR en el array.',
-      buttons: ['OK']
+      header: 'QR escaneado correctamente',
+      message: `Excelente ${this.nombre}, has registrado tu asistencia a la clase.`,
+      buttons: [{
+        text: 'Cerrar Sesión',
+        handler: () => {
+          this.router.navigate(['/login']);
+        }
+      }]
     });
+
     await alert.present();
   }
 
-  async errorAlert(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: 'Escaneo Fallido',
-      message: 'El escaneo no se pudo realizar.',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  async showAlert(message: string): Promise<void> {
-    const alert = await this.alertController.create({
-      header: 'Debug',
-      message: message,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-
-  registrarAsistencia(codigo: string, seccion: string, fecha: string) {
-    const body = {
-      alumno_id: this.idAlumno,
-      codigo: codigo,
-      seccion: seccion,
-      fecha: fecha
-    };
-
-    this.apiService.registrarAsistencia(body).subscribe(response => {
-      console.log(response);
-    });
-  }
 }

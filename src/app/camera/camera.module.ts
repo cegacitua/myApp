@@ -8,13 +8,9 @@ import { CameraPageRoutingModule } from './camera-routing.module';
 
 import { CameraPage } from './camera.page';
 
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 
-import {
-  Barcode,
-  BarcodeScanner,
-  BarcodeFormat,
-  LensFacing
-} from '@capacitor-mlkit/barcode-scanning';
+LOAD_WASM().subscribe();
 
 
 @NgModule({
@@ -22,7 +18,8 @@ import {
     CommonModule,
     FormsModule,
     IonicModule,
-    CameraPageRoutingModule
+    CameraPageRoutingModule,
+    NgxScannerQrcodeModule,
   ],
   declarations: [CameraPage],
   providers: []

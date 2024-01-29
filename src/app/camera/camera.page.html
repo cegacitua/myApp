@@ -11,34 +11,13 @@
     </ion-toolbar>
   </ion-header>
 
-    <ion-list>
-      <ion-item *ngFor="let barcode of barcodes">
-        <ion-label position="stacked">{{ barcode.format }}</ion-label>
-        <ion-input type="text" [value]="barcode.rawValue"></ion-input>
-      </ion-item>
-    </ion-list>
+  <ngx-scanner-qrcode (scanSuccess)="handleQrScan($event)"></ngx-scanner-qrcode>
 
-    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-      <ion-fab-button (click)="scan()" [disabled]="!isSupported">
-        <ion-icon name="scan"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+  <!-- <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode> -->
 
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="qrScanned">
+    <ion-fab-button (click)="registrarAsistencia()">
+      <ion-icon name="checkmark-done"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
-
-
-  <!-- <div class="image-container">
-    <ion-button fill="solid" size="large" shape="round" color="light" slot="fixed" class="overlay-button" id="qr-capturado">  </ion-button>
-  </div> -->
-
-
-  <!-- <ion-alert
-  trigger="qr-capturado"
-  header="QR escaneado correctamente"
-  message="Excelente {{nombre}}, has registrado tu asistencia a la clase."
-  [buttons]="boton" [routerLink]="['/login']"
- ></ion-alert> -->
-
-
-
-

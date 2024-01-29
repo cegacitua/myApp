@@ -13,21 +13,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistroComponent } from './registro/registro.component';
 
-import {
-  Barcode,
-  BarcodeScanner,
-  BarcodeFormat,
-  LensFacing
-} from '@capacitor-mlkit/barcode-scanning';
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 
+LOAD_WASM().subscribe();
 
 
 @NgModule({
   declarations: [AppComponent, RegistroComponent],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    ReactiveFormsModule,
+    NgxScannerQrcodeModule,
+  ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    // { provide: BarcodeScanner, useClass: BarcodeScanner }
   ],
   bootstrap: [AppComponent],
 })
