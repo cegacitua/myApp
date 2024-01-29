@@ -23,12 +23,6 @@ export class CameraPage implements OnInit {
   // qr!: NgxScannerQrcodeModule;
 
 
-
-  codigo: string = '';
-  seccion: string = '';
-  fecha: string = '';
-
-
   ngOnInit() {
     this.startScan();
   }
@@ -42,6 +36,7 @@ export class CameraPage implements OnInit {
 
   async handleQrScan(data: any) {
     this.qrScanned = true;
+
   }
 
 
@@ -53,17 +48,19 @@ export class CameraPage implements OnInit {
       console.error('El código QR no tiene el formato correcto.');
     }
     else{
-      [this.codigo, this.seccion, this.fecha] = partes;
+    let [codigo, seccion, fecha] = partes;
+    this.registrarAsistencia(codigo, seccion, fecha);
     }
   }
 
 
-  registrarAsistencia() {
+
+  registrarAsistencia(codigo: string, seccion: string, fecha: string) {
     const body = {
       alumno_id: this.idAlumno,
-      codigo: this.codigo,
-      seccion: this.seccion,
-      fecha: this.fecha
+      codigo: codigo,
+      seccion: seccion,
+      fecha: fecha
     };
 
     this.apiService.registrarAsistencia(body).subscribe(response => {
@@ -79,6 +76,8 @@ export class CameraPage implements OnInit {
       this.scanner.stop();
     }
   }
+
+
 
 
   userHome: any;
@@ -100,6 +99,8 @@ export class CameraPage implements OnInit {
       }
     });
   }
+
+
 
 
 
