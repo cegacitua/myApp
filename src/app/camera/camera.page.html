@@ -5,19 +5,20 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Escanear QR</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <ngx-scanner-qrcode (scanSuccess)="handleQrScan($event)"></ngx-scanner-qrcode>
+  <ngx-scanner-qrcode #action="scanner" [constraints]="{ video: { facingMode: 'environment' } }"></ngx-scanner-qrcode>
 
-  <!-- <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode> -->
+
+<!-- Loading -->
+<p *ngIf="action.isLoading">⌛ Loading...</p>
+
+<!-- start -->
+<button (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Stop' : 'Start'}}</button>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="qrScanned">
     <ion-fab-button (click)="registrarAsistencia()">
-      <ion-icon name="checkmark-done"></ion-icon>
+      <ion-icon name="qr-code-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+

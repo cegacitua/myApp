@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../services/consumoapi.service';
@@ -14,53 +14,65 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
 })
-export class CameraPage implements OnInit {
+export class CameraPage implements OnInit, AfterViewInit {
   @ViewChild(NgxScannerQrcodeComponent, { static: false })
   scanner!: NgxScannerQrcodeComponent;
   qrScanned = false;
 
-  // @ViewChild(NgxScannerQrcodeModule, { static: false })
-  // qr!: NgxScannerQrcodeModule;
+
+  codigo: string = '';
+  seccion: string = '';
+  fecha: string = '';
 
 
   ngOnInit() {
     this.startScan();
+    console.log("Iniciar scanner");
+  }
+
+  ngAfterViewInit() {
+    if (this.scanner) {
+      this.scanner.devices.subscribe(devices => {
+        const device = devices.find(f => (/back|rear|environment/gi.test(f.label)));
+        this.scanner.playDevice(device ? device.deviceId : devices[0].deviceId);
+      });
+  
+      this.scanner.data.subscribe(data => {
+        if (data && data.length > 0) {
+          this.procesarQR(data[0].value);
+        }
+      });
+    }
   }
 
   startScan() {
     if (this.scanner) {
       this.scanner.start();
+      console.log("Scanner iniciado")
     }
   }
 
-
-  async handleQrScan(data: any) {
-    this.qrScanned = true;
-
-  }
-
-
-  async procesarQR() {
-    let qr = this.scanner.data.value[0].value;
-    let partes = qr.split('-');
-
-    if (partes.length !== 3 || qr.length > 20){
-      console.error('El código QR no tiene el formato correcto.');
+  async procesarQR(qr: string) {
+    let partes = qr.split('_');
+  
+    if (partes.length !== 3 || qr.length > 25){
+      this.errorAlert();
     }
     else{
-    let [codigo, seccion, fecha] = partes;
-    this.registrarAsistencia(codigo, seccion, fecha);
+      [this.codigo, this.seccion, this.fecha] = partes;
+      console.log(this.codigo, this.seccion, this.fecha);
+      this.qrScanned = true;
     }
   }
 
 
 
-  registrarAsistencia(codigo: string, seccion: string, fecha: string) {
+  registrarAsistencia() {
     const body = {
       alumno_id: this.idAlumno,
-      codigo: codigo,
-      seccion: seccion,
-      fecha: fecha
+      codigo: this.codigo,
+      seccion: this.seccion,
+      fecha: this.fecha
     };
 
     this.apiService.registrarAsistencia(body).subscribe(response => {
@@ -76,7 +88,6 @@ export class CameraPage implements OnInit {
       this.scanner.stop();
     }
   }
-
 
 
 
@@ -99,8 +110,6 @@ export class CameraPage implements OnInit {
       }
     });
   }
-
-
 
 
 
@@ -128,5 +137,20 @@ export class CameraPage implements OnInit {
 
     await alert.present();
   }
+
+
+  async errorAlert(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Formato de QR incorrecto',
+      message: `El código QR no tiene el formato correcto.`,
+      buttons: [{
+        text: 'Reintentar'
+      }]
+    });
+
+    await alert.present();
+  }
+
+
 
 }

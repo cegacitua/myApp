@@ -15,8 +15,8 @@ profesores = [
                 "codigo": "PGY0000",
                 "seccion": "013V",
                 "alumnos": [
-                    {"id": 1, "nombre": "Luis", "rut": "21.345.678-9"},
-                    {"id": 2, "nombre": "María", "rut": "18.765.432-1"}
+                    {"id": 1, "nombre": "Luis", "rut": "21.345.678-9", "status": 0},
+                    {"id": 2, "nombre": "María", "rut": "18.765.432-1", "status": 0}
                 ]
             },
             {
@@ -25,8 +25,8 @@ profesores = [
                 "codigo": "PGY0000",
                 "seccion": "015V",
                 "alumnos": [
-                    {"id": 1, "nombre": "Camila", "rut": "18.948.473-9"},
-                    {"id": 2, "nombre": "Carlos", "rut": "19.836.279-1"}
+                    {"id": 1, "nombre": "Camila", "rut": "18.948.473-9", "status": 0},
+                    {"id": 2, "nombre": "Carlos", "rut": "19.836.279-1", "status": 0}
                 ]
             },
             {
@@ -35,8 +35,8 @@ profesores = [
                 "codigo": "PGY0000",
                 "seccion": "018V",
                 "alumnos": [
-                    {"id": 1, "nombre": "Andrea", "rut": "21.834.762-9"},
-                    {"id": 2, "nombre": "Hernán", "rut": "17.837.265-1"}
+                    {"id": 1, "nombre": "Andrea", "rut": "21.834.762-9", "status": 0},
+                    {"id": 2, "nombre": "Hernán", "rut": "17.837.265-1", "status": 0}
                 ]
             }
         ]
@@ -116,6 +116,9 @@ def registrar():
 
     return jsonify(nuevo_usuario), 201
 
+
+
+
 @app.route('/profesores' and '/profesores/', methods=['GET'])
 def obtener_profesores():
     return jsonify(profesores), 200
@@ -143,40 +146,25 @@ def obtener_usuarios():
     return jsonify(usuarios), 200
 
 
-@app.route('/registrar_asistencia', methods=['POST'])
 
+@app.route('/registrar_asistencia', methods=['POST'])
 def registrar_asistencia():
 
   alumno_id = request.json.get('alumno_id')
-
   codigo = request.json.get('codigo')
-
   seccion = request.json.get('seccion')
-
   fecha = request.json.get('fecha')
 
-   
-
   # Aquí buscarías el curso y al alumno y actualizarías su estado.
-
   for profesor in profesores:
-
     for curso in profesor["cursos"]:
-
       if curso["codigo"] == codigo and curso["seccion"] == seccion:
-
         for alumno in curso["alumnos"]:
-
           if alumno["id"] == alumno_id:
-
             alumno["status"] = 1
             return jsonify({"message": "Asistencia registrada"}), 200
 
-   
-
   return jsonify({"message": "No se pudo registrar la asistencia"}), 400
-
-
 
 
 

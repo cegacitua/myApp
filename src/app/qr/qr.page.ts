@@ -34,7 +34,7 @@ export class QrPage implements OnInit {
     if (this.cursol) {
         const fechaActual = new Date().toISOString().split('T')[0];
         // const data = "hola mundo";
-        const data = `${this.cursol.codigo}-${this.cursol.seccion}-${fechaActual}`;
+        const data = `${this.cursol.codigo}_${this.cursol.seccion}_${fechaActual}`;
         
 
         try {
