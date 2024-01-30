@@ -2,12 +2,16 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../services/consumoapi.service';
-
 import { ViewChild, ElementRef } from '@angular/core';
 
-import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
+import {
+  ScannerQRCodeConfig,
+  ScannerQRCodeResult,
+  NgxScannerQrcodeService,
+  NgxScannerQrcodeComponent,
+  ScannerQRCodeSelectedFiles,
+} from 'ngx-scanner-qrcode';
 
-import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-camera',
@@ -26,15 +30,13 @@ export class CameraPage implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    this.startScan();
-    console.log("Iniciar scanner");
   }
+
 
   ngAfterViewInit() {
     if (this.scanner) {
-      this.scanner.devices.subscribe(devices => {
-        const device = devices.find(f => (/back|rear|environment/gi.test(f.label)));
-        this.scanner.playDevice(device ? device.deviceId : devices[0].deviceId);
+      this.scanner.isReady.subscribe(() => {
+        this.handle(this.scanner);
       });
 
       this.scanner.data.subscribe(data => {
@@ -45,12 +47,21 @@ export class CameraPage implements OnInit, AfterViewInit {
     }
   }
 
-  startScan() {
-    if (this.scanner) {
-      this.scanner.start();
-      console.log("Scanner iniciado")
+
+
+  public handle(scanner: any): void {
+    const playDeviceFacingBack = (devices: any[]) => {
+      const device = devices.find(f => (/back|rear|environment/gi.test(f.label)));
+      if (device) {
+        scanner.playDevice(device.deviceId);
+      } else {
+        console.log('No se encontró un dispositivo con etiqueta back, rear o environment');
+      }
     }
+    scanner['start'](playDeviceFacingBack).subscribe();
   }
+
+
 
   async procesarQR(qr: string) {
     let partes = qr.split('_');
@@ -77,18 +88,10 @@ export class CameraPage implements OnInit, AfterViewInit {
     this.capturaAlert();
     this.apiService.registrarAsistencia(body).subscribe(response => {
       // this.capturaAlert(response)
-      this.stopScan();
+      this.scanner.stop();
     });
 
   }
-// console.log(body)
-
-  stopScan() {
-    if (this.scanner) {
-      this.scanner.stop();
-    }
-  }
-
 
 
   nombre: string = "";
