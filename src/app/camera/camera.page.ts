@@ -76,7 +76,7 @@ export class CameraPage implements OnInit, AfterViewInit {
     };
     this.capturaAlert(this.idAlumno);
     this.apiService.registrarAsistencia(body).subscribe(response => {
-      this.capturaAlert(response)
+      // this.capturaAlert(response)
       this.stopScan();
     });
     
