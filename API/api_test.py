@@ -15,8 +15,8 @@ profesores = [
                 "codigo": "PGY0000",
                 "seccion": "013V",
                 "alumnos": [
-                    {"id": 1, "nombre": "Luis", "rut": "21.345.678-9", "status": 0},
-                    {"id": 2, "nombre": "María", "rut": "18.765.432-1", "status": 0}
+                    {"id": 1, "nombre": "Luis Gonzalez", "rut": "21.345.678-9", "status": 0},
+                    {"id": 2, "nombre": "María Parker", "rut": "18.765.432-1", "status": 0}
                 ]
             },
             {
@@ -25,8 +25,8 @@ profesores = [
                 "codigo": "PGY0000",
                 "seccion": "015V",
                 "alumnos": [
-                    {"id": 1, "nombre": "Camila", "rut": "18.948.473-9", "status": 0},
-                    {"id": 2, "nombre": "Carlos", "rut": "19.836.279-1", "status": 0}
+                    {"id": 1, "nombre": "Camila Camus", "rut": "18.948.473-9", "status": 0},
+                    {"id": 2, "nombre": "Carlos Cardenas", "rut": "19.836.279-1", "status": 0}
                 ]
             },
             {
@@ -35,8 +35,8 @@ profesores = [
                 "codigo": "PGY0000",
                 "seccion": "018V",
                 "alumnos": [
-                    {"id": 1, "nombre": "Andrea", "rut": "21.834.762-9", "status": 0},
-                    {"id": 2, "nombre": "Hernán", "rut": "17.837.265-1", "status": 0}
+                    {"id": 1, "nombre": "Andrea Andrade", "rut": "21.834.762-9", "status": 0},
+                    {"id": 2, "nombre": "Hernán Henriquez", "rut": "17.837.265-1", "status": 0}
                 ]
             }
         ]

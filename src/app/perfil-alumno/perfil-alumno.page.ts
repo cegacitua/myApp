@@ -9,21 +9,26 @@ import { NavigationExtras, ActivatedRoute, Router } from '@angular/router';
 export class PerfilAlumnoPage  {
 
   nombre = "";
+  id: any = null;
 
   constructor(private activatedRoute: ActivatedRoute, private router:Router) {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state){
         this.nombre = this.router.getCurrentNavigation()?.extras.state?.['nombre'];
+        this.id = this.router.getCurrentNavigation()?.extras.state?.['id'];
       }
     })
   }
 
+
+
   navegarACamara() {
-    this.router.navigate(['/camera'], {
-      state: { nombre: this.nombre }
-    });
+    let setData: NavigationExtras = {
+      state: {
+        nombre: this.nombre,
+        id: this.id,
+      }
+    };
+    this.router.navigate(['/camera'],setData);
   }
-
 }
-
-

@@ -36,7 +36,7 @@ export class CameraPage implements OnInit, AfterViewInit {
         const device = devices.find(f => (/back|rear|environment/gi.test(f.label)));
         this.scanner.playDevice(device ? device.deviceId : devices[0].deviceId);
       });
-  
+
       this.scanner.data.subscribe(data => {
         if (data && data.length > 0) {
           this.procesarQR(data[0].value);
@@ -54,7 +54,7 @@ export class CameraPage implements OnInit, AfterViewInit {
 
   async procesarQR(qr: string) {
     let partes = qr.split('_');
-  
+
     if (partes.length !== 3 || qr.length > 25){
       this.errorAlert();
     }
@@ -69,17 +69,17 @@ export class CameraPage implements OnInit, AfterViewInit {
 
   registrarAsistencia() {
     const body = {
-      alumno_id: this.idAlumno,
+      nombreAlumno: this.nombre,
       codigo: this.codigo,
       seccion: this.seccion,
       fecha: this.fecha
     };
-    this.capturaAlert(this.idAlumno);
+    this.capturaAlert();
     this.apiService.registrarAsistencia(body).subscribe(response => {
       // this.capturaAlert(response)
       this.stopScan();
     });
-    
+
   }
 // console.log(body)
 
@@ -91,8 +91,8 @@ export class CameraPage implements OnInit, AfterViewInit {
 
 
 
-  nombre: any;
-  idAlumno: any;
+  nombre: string = "";
+  idAlumno: any = null;
 
   boton = ['Cerrar Sesión'];
 
@@ -104,7 +104,7 @@ export class CameraPage implements OnInit, AfterViewInit {
   ) {
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state) {
-        this.nombre = this.router.getCurrentNavigation()?.extras.state?.['user'];
+        this.nombre = this.router.getCurrentNavigation()?.extras.state?.['nombre'];
         this.idAlumno = this.router.getCurrentNavigation()?.extras.state?.['id'];
       }
     });
@@ -122,10 +122,10 @@ export class CameraPage implements OnInit, AfterViewInit {
   }
 
 
-  async capturaAlert(mensaje:any): Promise<void> {
+  async capturaAlert(): Promise<void> {
     const alert = await this.alertController.create({
       header: 'QR escaneado correctamente',
-      message: `Excelente ${this.nombre}, has registrado tu asistencia a la clase. ${mensaje}`,
+      message: `Excelente ${this.nombre}, has registrado tu asistencia a la clase.`,
       buttons: [{
         text: 'Cerrar Sesión',
         handler: () => {
