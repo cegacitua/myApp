@@ -148,7 +148,7 @@ def obtener_usuarios():
 @app.route('/registrar_asistencia', methods=['POST'])
 def registrar_asistencia():
 
-  nombreAlumno = request.json.get('alumno_id')
+  nombreAlumno = request.json.get('nombreAlumno')
   codigo = request.json.get('codigo')
   seccion = request.json.get('seccion')
   fecha = request.json.get('fecha')
