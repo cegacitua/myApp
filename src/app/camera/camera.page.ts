@@ -19,6 +19,7 @@ import {
   styleUrls: ['./camera.page.scss'],
 })
 export class CameraPage implements OnInit, AfterViewInit {
+
   @ViewChild(NgxScannerQrcodeComponent, { static: false })
   scanner!: NgxScannerQrcodeComponent;
   qrScanned = false;
