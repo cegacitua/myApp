@@ -110,8 +110,6 @@ def registrar():
         "perfil": perfil,
         "correo": correo
     }
-
-    # Agregar el nuevo usuario a la lista de usuarios
     usuarios.append(nuevo_usuario)
 
     return jsonify(nuevo_usuario), 201
@@ -150,17 +148,16 @@ def obtener_usuarios():
 @app.route('/registrar_asistencia', methods=['POST'])
 def registrar_asistencia():
 
-  alumno_id = request.json.get('alumno_id')
+  nombreAlumno = request.json.get('alumno_id')
   codigo = request.json.get('codigo')
   seccion = request.json.get('seccion')
   fecha = request.json.get('fecha')
 
-  # Aquí buscarías el curso y al alumno y actualizarías su estado.
   for profesor in profesores:
     for curso in profesor["cursos"]:
       if curso["codigo"] == codigo and curso["seccion"] == seccion:
         for alumno in curso["alumnos"]:
-          if alumno["id"] == alumno_id:
+          if alumno["nombre"] == nombreAlumno:
             alumno["status"] = 1
             return jsonify({"message": "Asistencia registrada"}), 200
 
