@@ -4,18 +4,11 @@ import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../services/consumoapi.service';
 
 
-
 import { isPlatform} from '@ionic/angular';
 import { Capacitor, PermissionState } from '@capacitor/core';
 
-import { Camera, ImageOptions, CameraResultType, CameraSource } from '@capacitor/camera';
+// import { Camera, ImageOptions, CameraResultType, CameraSource } from '@capacitor/camera';
 
-import {
-  Barcode,
-  BarcodeScanner,
-  BarcodeFormat,
-  LensFacing
-} from '@capacitor-mlkit/barcode-scanning';
 
 
 @Component({
@@ -32,7 +25,7 @@ export class CameraPage implements OnInit {
   idAlumno: any;
 
   isSupported = false;
-  barcodes: Barcode[] = [];
+
 
   constructor(
     private alertController: AlertController,
@@ -50,56 +43,11 @@ export class CameraPage implements OnInit {
 
 
   ngOnInit() {
-    BarcodeScanner.isSupported().then((result) => {
-      this.isSupported = result.supported;
-    });
+
   }
 
 
 
-
-  async scan(): Promise<void> {
-    // const granted = await this.requestPermissions();
-    // if (!granted) {
-    //   this.presentAlert();
-    //   return;
-    // }
-    const checkModule = await this.CheckGoogleBSModuleAvailable();
-    const { barcodes } = await BarcodeScanner.scan({
-      formats: [BarcodeFormat.QrCode],
-    });
-    await this.showAlert(JSON.stringify(barcodes));
-    if (barcodes.length > 0) {
-      this.aperturaAlert();
-      this.barcodes.push(...barcodes);
-      this.capturaAlert();
-      // this.registrarAsistencia(barcodes[0].displayValue);
-    } else {
-      this.errorAlert();
-    }
-  }
-
-
-
-
-
-
-  async requestPermissions(): Promise<boolean> {
-    const { camera } = await BarcodeScanner.requestPermissions();
-    return camera === 'granted' || camera === 'limited';
-  }
-
-
-
-  async CheckGoogleBSModuleAvailable(): Promise<void> {
-    const result = await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
-    if (result.available) {
-      this.availableAlert();
-    }
-    else {
-      this.noAvailableAlert();
-    }
-  }
   noAvailableAlert() {
     throw new Error('Method not implemented.');
   }

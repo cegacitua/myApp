@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { curso } from '../model/curso';
 import { alumnos } from '../model/alumno';
-import { ConsumoapiService } from '../services/consumoapi.service'; 
+import { ConsumoapiService } from '../services/consumoapi.service';
 import { ActivatedRoute, Router, Route } from '@angular/router';
-import QRCode from 'qrcode';
+
 
 @Component({
   selector: 'app-qr',
@@ -19,7 +19,11 @@ export class QrPage implements OnInit {
 
   qrDataURL: string = '';
 
+  public QrData: string = "";
+
   constructor(private apiService: ConsumoapiService, private router: Router, private activeroute : ActivatedRoute) {
+
+
 
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state) {
@@ -27,19 +31,18 @@ export class QrPage implements OnInit {
         this.cursoId = this.router.getCurrentNavigation()?.extras.state?.['idCurso'];
       }
     });
-
   }
 
   async generateQRCode() {
     if (this.cursol) {
         const fechaActual = new Date().toISOString().split('T')[0];
         // const data = "hola mundo";
-        const data = `${this.cursol.codigo}-${this.cursol.seccion}-${fechaActual}`;
-        
+        const data = `${this.cursol.codigo}_${this.cursol.seccion}_${fechaActual}`;
+
 
         try {
-            // this.qrDataURL = await QRCode.toDataURL(data);
-            this.qrDataURL = await QRCode.toString(data, { type: 'svg' });
+            // this.qrDataURL = await QRCode.toString(data, { type: 'svg' });
+            this.QrData = data;
         } catch (err) {
             console.error(err);
         }
@@ -59,3 +62,5 @@ export class QrPage implements OnInit {
     );
   }
 }
+
+

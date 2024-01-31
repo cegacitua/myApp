@@ -9,13 +9,6 @@ import { CameraPageRoutingModule } from './camera-routing.module';
 import { CameraPage } from './camera.page';
 
 
-import {
-  Barcode,
-  BarcodeScanner,
-  BarcodeFormat,
-  LensFacing
-} from '@capacitor-mlkit/barcode-scanning';
-
 
 @NgModule({
   imports: [

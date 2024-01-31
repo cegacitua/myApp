@@ -13,7 +13,7 @@
 
 
   <ion-card>
-    <img alt="" [src]="qrDataURL" *ngIf="qrDataURL">
+    <qrcode [qrdata]="QrData" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
     <ion-card-header>
       <ion-card-title>Escanear para registrar asistencia</ion-card-title>
       <ion-card-subtitle>Asignatura: {{ cursol?.nombre }}</ion-card-subtitle>
