@@ -69,3 +69,4 @@ Thumbs.db
 src/app/camera/camera.page copy.ts
 .gitignore
 
+package-lock.json
