@@ -15,6 +15,8 @@ import { RegistroComponent } from './registro/registro.component';
 
 import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 
+import { QRCodeModule } from 'angularx-qrcode';
+
 LOAD_WASM().subscribe();
 
 
@@ -27,6 +29,7 @@ LOAD_WASM().subscribe();
     AppRoutingModule,
     ReactiveFormsModule,
     NgxScannerQrcodeModule,
+    QRCodeModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

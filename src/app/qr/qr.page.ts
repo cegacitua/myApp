@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { curso } from '../model/curso';
 import { alumnos } from '../model/alumno';
 import { ConsumoapiService } from '../services/consumoapi.service';
 import { ActivatedRoute, Router, Route } from '@angular/router';
-import QRCode from 'qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-qr',
@@ -17,9 +17,17 @@ export class QrPage implements OnInit {
   profesorId: number = 0;
   cursoId:any;
 
-  qrDataURL: string = '';
+  // qrDataURL: string = '';
+  public QrData: string = "";
 
-  constructor(private apiService: ConsumoapiService, private router: Router, private activeroute : ActivatedRoute) {
+
+
+
+  constructor(private apiService: ConsumoapiService, private router: Router, private activeroute : ActivatedRoute, private cd: ChangeDetectorRef) {
+
+
+
+
 
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation()?.extras.state) {
@@ -35,11 +43,9 @@ export class QrPage implements OnInit {
         const fechaActual = new Date().toISOString().split('T')[0];
         // const data = "hola mundo";
         const data = `${this.cursol.codigo}_${this.cursol.seccion}_${fechaActual}`;
-
-
         try {
-            // this.qrDataURL = await QRCode.toDataURL(data);
-            this.qrDataURL = await QRCode.toString(data, { type: 'svg' });
+            // this.qrDataURL = await QRCode.toString(data, { type: 'svg' });
+            this.QrData = data;
         } catch (err) {
             console.error(err);
         }
@@ -48,16 +54,34 @@ export class QrPage implements OnInit {
 
   ngOnInit() {
     this.apiService.obtenerCursosPorProfesor(this.profesorId).subscribe(
-        data => {
-          this.cursol = data.find((curso: curso) => curso.id === this.cursoId);
-            this.alumnosl = this.cursol ? this.cursol.alumnos : [];
-            this.generateQRCode();
-        },
-        error => {
-            console.error("Error obteniendo cursos:", error);
+      data => {
+        this.cursol = data.find((curso: curso) => curso.id === this.cursoId);
+        this.alumnosl = this.cursol ? this.cursol.alumnos : [];
+        this.generateQRCode();
+  
+        if (this.alumnosl) {  
+          this.alumnosl.forEach(alumno => {
+            if (alumno && alumno.id !== undefined) {
+              this.apiService.obtenerEstadoAsistencia(alumno.id).subscribe(
+                data => {
+                  alumno.status = data.status;
+                  this.cd.detectChanges();
+                },
+                error => {
+                  console.error("Error obteniendo el estado de asistencia:", error);
+                }
+              );
+            }
+          });
         }
+      },
+      error => {
+        console.error("Error obteniendo cursos:", error);
+      }
     );
   }
+
+
 }
 
 

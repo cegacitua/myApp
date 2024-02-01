@@ -53,7 +53,9 @@ export class ConsumoapiService {
     return this.http.post<any>(this.url + 'registrar_asistencia', body, this.httpOptions);
   }
 
-
+  public obtenerEstadoAsistencia(alumnoId: number): Observable<any> {
+    return this.http.get<any>(this.url + 'estado_asistencia' + alumnoId, this.httpOptions);
+  }
 
   constructor(private http: HttpClient) {
   }

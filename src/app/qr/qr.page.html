@@ -13,14 +13,14 @@
 
 
   <ion-card>
-    <img alt="" [src]="qrDataURL" *ngIf="qrDataURL">
+    <qrcode [qrdata]="QrData" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
     <ion-card-header>
       <ion-card-title>Escanear para registrar asistencia</ion-card-title>
       <ion-card-subtitle>Asignatura: {{ cursol?.nombre }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      
+
 
       <ion-list>
         <ion-list-header>
@@ -35,7 +35,9 @@
             <ion-label>{{ alumno.nombre }}</ion-label>
             <ion-card-subtitle>RUT: {{ alumno.rut }}</ion-card-subtitle>
           </div>
-          <ion-button fill="solid" shape="round" color="secondary" >Ver asistencia </ion-button>
+          <ion-button fill="solid" shape="round" color="secondary" >
+            {{ alumno.status === 0 ? 'Ausente' : 'Presente' }}
+          </ion-button>
         </ion-item>
 
       </ion-list>
