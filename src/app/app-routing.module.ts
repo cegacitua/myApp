@@ -17,22 +17,22 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    // canActivate: [AuthguardGuard]
+     canActivate: [AuthguardGuard]
   },
   {
     path: 'qr',
     loadChildren: () => import('./qr/qr.module').then( m => m.QrPageModule),
-    // canActivate: [AuthguardGuard]
+     canActivate: [AuthguardGuard]
   },
   {
     path: 'perfilalumno',
     loadChildren: () => import('./perfil-alumno/perfil-alumno.module').then( m => m.PerfilAlumnoPageModule),
-    // canActivate: [AuthalumnoGuard]
+     canActivate: [AuthalumnoGuard]
   },
   {
     path: 'camera',
     loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule),
-    // canActivate: [AuthalumnoGuard]
+     canActivate: [AuthalumnoGuard]
   },
   {
     path: '**',
